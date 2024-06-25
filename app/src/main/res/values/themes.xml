@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Tales" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
+    </style>
+
+    <style name="Theme.Tales.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
+        <item name="android:windowBackground">@color/backgroundColor</item>
+    </style>
+
+    <style name="EditTextBackground">
+        <item name="android:backgroundTint">@color/inputBorderColor</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:backgroundTint">@color/primaryColor</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

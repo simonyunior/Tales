@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.story.CreateStoryActivity">
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_placeholder" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/buttonPickPhoto"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Gallery"
+            android:textSize="12sp"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/buttonCapturePhoto"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Camera"
+            android:textSize="12sp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edAddDescription"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:hint="Description"
+        android:background="@drawable/edit_text_border"
+        android:padding="8dp"
+        android:textColor="@android:color/black"
+        android:gravity="top|start" />
+
+    <Switch
+        android:id="@+id/switchAddLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Location"
+        android:layout_marginTop="8dp"
+        android:checked="false" />
+
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload story" />
+</LinearLayout>
