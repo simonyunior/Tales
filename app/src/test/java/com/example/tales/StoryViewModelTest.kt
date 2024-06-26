@@ -29,28 +29,31 @@ class StoryViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
 
+    private lateinit var fakeRepository: FakeStoryRepository
+    private lateinit var storyViewModel: FakeStoryViewModel
+
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
+        fakeRepository = FakeStoryRepository()
+        storyViewModel = FakeStoryViewModel(fakeRepository)
     }
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain()
-        dispatcher.cancel()
+        Dispatchers.resetMain() // Reset main dispatcher to the original Main dispatcher
+        dispatcher.cancel() // Cancel the test dispatcher
     }
 
     @Test
     fun `when getStories called with data then return data`() = runTest {
-        val fakeRepository = FakeStoryRepository()
-        val storyViewModel = FakeStoryViewModel(fakeRepository)
-
         val result = storyViewModel.getStories().single()
         assertNotNull(result)
 
-
+        // Convert PagingData to List for assertions
         val resultList = result.collectData()
 
+        // Log the size and contents of the result list
         println("Result list size: ${resultList.size}")
         resultList.forEachIndexed { index, story ->
             println("Story $index: ${story.id}")
@@ -62,17 +65,16 @@ class StoryViewModelTest {
 
     @Test
     fun `when getStories called with no data then return empty`() = runTest {
-        val fakeRepository = FakeStoryRepository()
-        val storyViewModel = FakeStoryViewModel(fakeRepository)
-
         val emptyFlow = flowOf(PagingData.empty<Story>())
         fakeRepository.overrideGetStoriesStream(emptyFlow)
 
         val result = storyViewModel.getStories().single()
         assertNotNull(result)
 
+        // Convert PagingData to List for assertions
         val resultList = result.collectData()
 
+        // Log the size of the result list
         println("Result list size: ${resultList.size}")
 
         assertEquals(0, resultList.size)
