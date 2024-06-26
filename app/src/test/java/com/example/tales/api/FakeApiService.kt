@@ -1,9 +1,9 @@
 package com.example.tales.api
 
+import com.example.tales.data.DataDummy
 import com.example.tales.model.AddStoryResponse
 import com.example.tales.model.LoginResponse
 import com.example.tales.model.RegistrationResponse
-import com.example.tales.model.Story
 import com.example.tales.model.StoryDetailResponse
 import com.example.tales.model.StoryResponse
 import com.example.tales.model.User
@@ -11,12 +11,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class FakeApiService : ApiService {
-
-    val dummyStories = listOf(
-        Story("1", "Title1", "Content1", "photoUrl1", 1.0, 1.0),
-        Story("2", "Title2", "Content2", "photoUrl2", 2.0, 2.0)
-    )
-
+    val dummyStories = DataDummy.generateDummyStories()
 
     override suspend fun register(name: String, email: String, password: String): RegistrationResponse {
         return RegistrationResponse(false, "Success")

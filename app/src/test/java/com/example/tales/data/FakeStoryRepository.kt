@@ -1,6 +1,9 @@
 package com.example.tales.data
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.tales.FakePagingSource
 import com.example.tales.api.FakeApiService
 import com.example.tales.model.Story
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +13,10 @@ import okhttp3.RequestBody
 
 class FakeStoryRepository(private val apiService: FakeApiService = FakeApiService()) : StoryRepositoryInterface {
 
-    private var storiesFlow: Flow<PagingData<Story>> = flowOf(PagingData.from(apiService.dummyStories))
+    private var storiesFlow: Flow<PagingData<Story>> = Pager(
+        config = PagingConfig(pageSize = 20),
+        pagingSourceFactory = { FakePagingSource(apiService.dummyStories) }
+    ).flow
 
     fun overrideGetStoriesStream(newFlow: Flow<PagingData<Story>>) {
         storiesFlow = newFlow
@@ -39,6 +45,5 @@ class FakeStoryRepository(private val apiService: FakeApiService = FakeApiServic
     }
 
     override suspend fun clearToken() {
-        // No-op for testing
     }
 }

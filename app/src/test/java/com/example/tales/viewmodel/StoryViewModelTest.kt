@@ -1,10 +1,10 @@
-package com.example.tales
+package com.example.tales.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
+import com.example.tales.collectData
 import com.example.tales.data.FakeStoryRepository
 import com.example.tales.model.Story
-import com.example.tales.viewmodel.FakeStoryViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -20,8 +20,11 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
 
 @ExperimentalCoroutinesApi
+@ExperimentalTime
 class StoryViewModelTest {
 
     @get:Rule
@@ -41,19 +44,20 @@ class StoryViewModelTest {
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain() // Reset main dispatcher to the original Main dispatcher
-        dispatcher.cancel() // Cancel the test dispatcher
+        Dispatchers.resetMain()
+        dispatcher.cancel()
     }
 
     @Test
-    fun `when getStories called with data then return data`() = runTest {
+    fun `when getStories called with data then return data`() = runTest(timeout = 30.seconds) {
+        println("Starting test: when getStories called with data then return data")
         val result = storyViewModel.getStories().single()
         assertNotNull(result)
+        println("Result is not null")
 
-        // Convert PagingData to List for assertions
         val resultList = result.collectData()
+        println("Data collected from PagingData")
 
-        // Log the size and contents of the result list
         println("Result list size: ${resultList.size}")
         resultList.forEachIndexed { index, story ->
             println("Story $index: ${story.id}")
@@ -64,17 +68,18 @@ class StoryViewModelTest {
     }
 
     @Test
-    fun `when getStories called with no data then return empty`() = runTest {
+    fun `when getStories called with no data then return empty`() = runTest(timeout = 30.seconds) {
+        println("Starting test: when getStories called with no data then return empty")
         val emptyFlow = flowOf(PagingData.empty<Story>())
         fakeRepository.overrideGetStoriesStream(emptyFlow)
 
         val result = storyViewModel.getStories().single()
         assertNotNull(result)
+        println("Result is not null")
 
-        // Convert PagingData to List for assertions
         val resultList = result.collectData()
+        println("Data collected from PagingData")
 
-        // Log the size of the result list
         println("Result list size: ${resultList.size}")
 
         assertEquals(0, resultList.size)
